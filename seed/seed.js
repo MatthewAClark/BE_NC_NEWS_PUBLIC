@@ -10,10 +10,11 @@ const {
 // Define the data
 const {
     articleData, commentsData, topicsData, usersData
-} = require('./devData');
+} = require(`./${process.env.NODE_ENV}Data`)
 
 const seedDB = () => {
     //let userList
+    
     return mongoose.connection.dropDatabase()
 
     .then(() => {
@@ -21,29 +22,35 @@ const seedDB = () => {
     })
 
     .then(([topics, users]) => {
-        articleData.forEach(article => {
-            article.created_by = users.filter(user => user.username === article.created_by)[0]._id
-            article.belongs_to = topics.filter(topic => topic.slug === article.topic)[0]._id
+        let newArticleData = articleData.map(article => {
+            const userId = users.filter(user => user.username === article.created_by)[0]._id
+            const topicId = topics.filter(topic => topic.slug === article.topic)[0]._id
+            return {...article, belongs_to: topicId, created_by: userId};
         });
         //console.log(articleData)
         //userList = users
-        return Promise.all([Article.insertMany(articleData),topics,users])
+        return Promise.all([Article.insertMany(newArticleData),topics,users])
 
     
     })
 
     .then(([articles, topics, users]) => {
-        commentsData.forEach(comment => {
-            comment.belongs_to = articles.filter(article => article.title === comment.belongs_to)[0]._id 
-            comment.created_by = users.filter(user => user.username === comment.created_by)[0]._id
+        
+            let newCommentsData = commentsData.map(comment => {
+            const articleId = articles.filter(article => article.title === comment.belongs_to)[0]._id 
+            const userId = users.filter(user => user.username === comment.created_by)[0]._id
+            return {...comment, belongs_to: articleId, created_by: userId};
+            
         })
-        return Promise.all([Comment.insertMany(commentsData),articles, topics, users])
+
+        return Promise.all([Comment.insertMany(newCommentsData),articles, topics, users])
     })
 
     // .then((docs) => {
     //     console.log(docs)
     //     mongoose.disconnect()
     // })
+    console.log('before this. Then I have failed')
 }
 
 module.exports = seedDB
