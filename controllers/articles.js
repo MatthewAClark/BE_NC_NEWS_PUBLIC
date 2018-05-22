@@ -1,14 +1,30 @@
+const { Article, Comment } = require('../models/index.js')
+
 module.exports = {
     fetchAll(req, res, next) {
-        res.status(200).send('getAllArticlesWorking')
+        
+            
+            Article.find({})
+              .then(data => {
+                res.status(200).send(data)
+              })
         
     },
      fetchById(req, res, next) {
-         res.status(200).send('getByIdWorking')
+         Article.findOne(req.params)
+              .then(data => {
+                  
+                res.status(200).send(data)
+              })
   
    }, 
    fetchCommentsByArticleId(req, res, next) {
-    res.status(200).send('getComments by article ID')
+    
+        Comment.find(req.params)
+          .then(data => {
+            res.status(200).send(data)
+          })
+  //  res.status(200).send('getComments by article ID')
 
 },
 createCommentsByArticleId(req, res, next) {

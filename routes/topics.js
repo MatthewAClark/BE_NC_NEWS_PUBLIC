@@ -9,9 +9,9 @@ const {topics} = require('../controllers/index.js');
 
 router.get('/', topics.fetchAll);
 
-router.get('/:topic_id/articles', topics.fetchArticleById)
+router.get('/:belongs_to/articles', topics.fetchArticleById)
 
-router.post('/:topic_id/articles', topics.createArticleByTopicId)
+router.post('/:belongs_to/articles', topics.createArticleByTopicId)
 
 //router.get('/:id', drivers.fetchDriver);
 

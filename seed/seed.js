@@ -35,6 +35,8 @@ const seedDB = () => {
     })
 
     .then(([articles, topics, users]) => {
+
+       // console.log(articles)
         
             let newCommentsData = commentsData.map(comment => {
             const articleId = articles.filter(article => article.title === comment.belongs_to)[0]._id 
@@ -50,7 +52,7 @@ const seedDB = () => {
     //     console.log(docs)
     //     mongoose.disconnect()
     // })
-    console.log('before this. Then I have failed')
+   
 }
 
 module.exports = seedDB

@@ -1,15 +1,12 @@
 if (process.env.NODE_ENV !== 'test') process.env.NODE_ENV = 'dev';
 
 // require the needed modules
-const app = require('express')();
 const mongoose = require('mongoose');
-const connectionDB = require(`./seed/seed.${process.env.NODE_ENV}.js`)
+const app = require('express')();
+const url = require('./config')
 
-// ejs
-app.set('view engine', 'ejs');
-
-// Connect to the database
-//connectionDB()
+// Connect to database
+mongoose.connect(url)
 
 // Define routes
 const apiRoutes = require('./routes/apiRoutes.js')

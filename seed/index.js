@@ -1,3 +1,3 @@
-const seedData =  require(`./${process.env.NODE_ENV}Data`)
+const seedData =  
 
 module.exports = require('./seed')

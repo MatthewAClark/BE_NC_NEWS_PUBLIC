@@ -9,12 +9,12 @@ const {articles} = require('../controllers/index.js');
 
 router.get('/', articles.fetchAll);
 
-router.get('/:article_id', articles.fetchById);
+router.get('/:_id', articles.fetchById);
 
-router.get('/:article_id/comments', articles.fetchCommentsByArticleId);
+router.get('/:belongs_to/comments', articles.fetchCommentsByArticleId);
 
-router.post('/:article_id/comments', articles.createCommentsByArticleId);
+router.post('/:_id/comments', articles.createCommentsByArticleId);
 
-router.put('/:article_id/', articles.updateVotesByArticleId);
+router.put('/:_id/', articles.updateVotesByArticleId);
 
 module.exports = router;
