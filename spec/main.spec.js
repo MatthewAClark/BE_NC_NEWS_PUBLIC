@@ -158,7 +158,7 @@ describe('API endpoints', () => {
   })
 
   ///api/articles/:article_id?vote=up
-  it.only('Ignore anything else in the query', function () {
+  it('Ignore anything else in the query', function () {
     this.timeout(30000)
 
     return request(app).put(`/api/articles/${articles[0]._id}?vote=bananas`)
@@ -168,6 +168,81 @@ describe('API endpoints', () => {
 
         expect(res.body).to.be.an('object');
         expect(res.body.votes).to.equal(0)
+        
+        //  expect(res.body.title).to.equal('Living in the shadow of a great man')
+
+      })
+  })
+
+   ///api/articles/:article_id?vote=up
+   it('Increment/decrements votes on a comments', function () {
+    //console.log(comments[0]._id)
+    this.timeout(30000)
+
+    return request(app).put(`/api/comments/${comments[0]._id}?vote=up`)
+
+    
+      .then(function (res) {
+
+        expect(res.body).to.be.an('object');
+        expect(res.body.votes).to.equal(8)
+        
+        return request(app).put(`/api/comments/${comments[0]._id}?vote=down`)
+          .then(function (res) {
+
+            expect(res.body).to.be.an('object');
+            expect(res.body.votes).to.equal(7)
+          })
+
+        //  expect(res.body.title).to.equal('Living in the shadow of a great man')
+
+      })
+  })
+
+  ///api/articles/:article_id?vote=up
+  it('Ignore anything else in the query', function () {
+    this.timeout(30000)
+
+    return request(app).put(`/api/comments/${comments[0]._id}?vote=bananas`)
+
+      
+      .then(function (res) {
+
+        expect(res.body).to.be.an('object');
+        expect(res.body.votes).to.equal(7)
+        
+        //  expect(res.body.title).to.equal('Living in the shadow of a great man')
+
+      })
+  })
+
+
+  it('Deletes a comment', function () {
+    this.timeout(30000)
+
+    return request(app).delete(`/api/comments/${comments[0]._id}`)
+
+      
+      .then(function (res) {
+
+        expect(res.body).to.be.an('object');
+        expect(res.body.votes).to.equal(7)
+        
+        //  expect(res.body.title).to.equal('Living in the shadow of a great man')
+
+      })
+  })
+
+  it.only('Fetch user by username', function () {
+    this.timeout(30000)
+
+    return request(app).get(`/api/users/${users[0]._id}`)
+
+      
+      .then(function (res) {
+
+        expect(res.body).to.be.an('object');
+        expect(res.body.votes).to.equal(7)
         
         //  expect(res.body.title).to.equal('Living in the shadow of a great man')
 

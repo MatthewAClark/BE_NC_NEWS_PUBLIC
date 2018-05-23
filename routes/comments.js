@@ -9,6 +9,8 @@ const {comments} = require('../controllers/index.js');
 
 router.get('/:comment_id', comments.fetchById);
 
-router.delete('/:comment_id', comments.deleteById);
+router.put('/:_id', comments.updateVotesByCommentId);
+
+router.delete('/:_id', comments.deleteById);
 
 module.exports = router;
