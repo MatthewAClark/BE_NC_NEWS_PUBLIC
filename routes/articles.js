@@ -13,7 +13,7 @@ router.get('/:_id', articles.fetchById);
 
 router.get('/:belongs_to/comments', articles.fetchCommentsByArticleId);
 
-router.post('/:_id/comments', articles.createCommentsByArticleId);
+router.post('/:belongs_to/comments', articles.createCommentsByArticleId);
 
 router.put('/:_id/', articles.updateVotesByArticleId);
 
