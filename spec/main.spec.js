@@ -107,13 +107,9 @@ describe('API endpoints', () => {
 
     return request(app).get(`/api/articles/${articles[0]._id}/comments`)
       .then((res) => {
-        // console.log(res.body)
-
         expect(res.body).to.be.an('array');
         expect(res.body[0].body).to.equal(`Replacing the quiet elegance of the dark suit and tie with the casual indifference of these muted earth tones is a form of fashion suicide, but, uh, call me crazy — on you it works.`)
         expect(res.body[1].body).to.equal(`The beautiful thing about treasure is that it exists. Got to find out what kind of sheets these are; not cotton, not rayon, silky.`)
-        //  expect(res.body.title).to.equal('Living in the shadow of a great man')
-
       })
   })
 
@@ -140,7 +136,7 @@ describe('API endpoints', () => {
 
     return request(app).put(`/api/articles/${articles[0]._id}?vote=up`)
 
-    
+
       .then(function (res) {
 
         expect(res.body).to.be.an('object');
@@ -163,30 +159,30 @@ describe('API endpoints', () => {
 
     return request(app).put(`/api/articles/${articles[0]._id}?vote=bananas`)
 
-      
+
       .then(function (res) {
 
         expect(res.body).to.be.an('object');
         expect(res.body.votes).to.equal(0)
-        
+
         //  expect(res.body.title).to.equal('Living in the shadow of a great man')
 
       })
   })
 
-   ///api/articles/:article_id?vote=up
-   it('Increment/decrements votes on a comments', function () {
+  ///api/articles/:article_id?vote=up
+  it('Increment/decrements votes on a comments', function () {
     //console.log(comments[0]._id)
     this.timeout(30000)
 
     return request(app).put(`/api/comments/${comments[0]._id}?vote=up`)
 
-    
+
       .then(function (res) {
 
         expect(res.body).to.be.an('object');
         expect(res.body.votes).to.equal(8)
-        
+
         return request(app).put(`/api/comments/${comments[0]._id}?vote=down`)
           .then(function (res) {
 
@@ -205,12 +201,12 @@ describe('API endpoints', () => {
 
     return request(app).put(`/api/comments/${comments[0]._id}?vote=bananas`)
 
-      
+
       .then(function (res) {
 
         expect(res.body).to.be.an('object');
         expect(res.body.votes).to.equal(7)
-        
+
         //  expect(res.body.title).to.equal('Living in the shadow of a great man')
 
       })
@@ -222,28 +218,28 @@ describe('API endpoints', () => {
 
     return request(app).delete(`/api/comments/${comments[0]._id}`)
 
-      
+
       .then(function (res) {
 
         expect(res.body).to.be.an('object');
         expect(res.body.votes).to.equal(7)
-        
+
         //  expect(res.body.title).to.equal('Living in the shadow of a great man')
 
       })
   })
 
-  it.only('Fetch user by username', function () {
+  it('Fetch user by username', function () {
     this.timeout(30000)
 
-    return request(app).get(`/api/users/${users[0]._id}`)
+    return request(app).get(`/api/users/${users[0].username}`)
 
-      
+
       .then(function (res) {
 
         expect(res.body).to.be.an('object');
-        expect(res.body.votes).to.equal(7)
-        
+        expect(res.body.username).to.equal(users[0].username)
+
         //  expect(res.body.title).to.equal('Living in the shadow of a great man')
 
       })
