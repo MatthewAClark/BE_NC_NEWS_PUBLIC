@@ -1,6 +1,6 @@
 /* eslint-disable no-console*/
 const app = require('./server.js');
-const PORT = 3000;
+const PORT = process.env.PORT;
 
 // Turn on the server
 //
