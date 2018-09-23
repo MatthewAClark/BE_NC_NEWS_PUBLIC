@@ -1,6 +1,6 @@
 // Require components
 const mongoose = require('mongoose');
-
+//process.env.NODE_ENV =  process.env.NODE_ENV || 'dev';
 
 // Import schemas from models
 const {

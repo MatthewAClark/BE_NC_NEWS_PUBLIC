@@ -39,7 +39,7 @@ describe('API endpoints', () => {
       // supertest expect  - key on promise object
       .expect(200)
       .then((res) => {
-        // console.log(res.body)
+         console.log(res.body)
         expect(res.body).to.be.an('array');
         expect(res.body.length).to.equal(2)
         expect(res.body[0].title).to.equal('Mitch')

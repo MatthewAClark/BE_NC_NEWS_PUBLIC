@@ -4,8 +4,9 @@ module.exports = {
   fetchAll(req, res, next) {
 
 
-    Article.find({})
+    Article.find({}).populate('belongs_to')
       .then(data => {
+        console.log('pop data')
         res.status(200).send(data)
       })
 
@@ -13,7 +14,7 @@ module.exports = {
   fetchById(req, res, next) {
     Article.findOne(req.params)
       .then(data => {
-
+console.log('Here in fetch article')
         res.status(200).send(data)
       })
 
