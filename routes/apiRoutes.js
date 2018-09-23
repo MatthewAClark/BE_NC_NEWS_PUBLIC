@@ -1,11 +1,11 @@
 const routes = {
-    users: require('./users'),
-    articles: require('./articles'),
-    comments: require('./comments'),
-    topics: require('./topics')
-}
+  users: require('./users'),
+  articles: require('./articles'),
+  comments: require('./comments'),
+  topics: require('./topics')
+};
 
-const {main} = require('../controllers/index.js')
+const {main} = require('../controllers/index.js');
 
 const express  = require('express');
 const router = express.Router();
@@ -19,7 +19,7 @@ router.use('/comments', routes.comments);
 
 router.use('/topics', routes.topics);
 
-router.use('/articles', routes.articles)
+router.use('/articles', routes.articles);
 
 
 module.exports = router;
