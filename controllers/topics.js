@@ -6,13 +6,15 @@ module.exports = {
     Topic.find({})
       .then(data => {
         res.status(200).send(data);
-      });
+      })
+      .catch(() => next({status: 404, error: 'Unable to fetch request'}));
   },
   fetchArticleById(req, res, next) {
     Article.find(req.params)
       .then(data => {
         res.status(200).send(data);
-      });
+      })
+      .catch(() => next({status: 404, error: 'Unable to fetch request'}));
 
   },
   createArticleByTopicId(req, res, next) {
@@ -24,7 +26,8 @@ module.exports = {
           .then(data => {
             res.status(200).send(data);
           });
-      });
+      })
+      .catch(() => next({status: 404, error: 'Unable to fetch request'}));
 
 
   }

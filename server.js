@@ -3,11 +3,13 @@ process.env.NODE_ENV =  process.env.NODE_ENV || 'dev';
 if (process.env.NODE_ENV !== 'production') require('dotenv').config({
   path: `./.${process.env.NODE_ENV}.env`
 });
+console.log(process.env.NODE_ENV)
 // Connect to DB
 const connectToDB = require('./seed');
 if (process.env.NODE_ENV !== 'test') connectToDB();
 
 // require the needed modules
+const express = require('express');
 const mongoose = require('mongoose');
 const app = require('express')();
 const url = require('./config');
@@ -18,6 +20,9 @@ mongoose.connect(url);
 
 // Define routes
 const apiRoutes = require('./routes/apiRoutes.js');
+
+// Static express
+app.use(express.static('public'));
 
 // corse
 app.use(cors());
@@ -31,7 +36,7 @@ app.use('/api', apiRoutes);
 
 // Server status
 app.get('/', (req, res) => {
-  res.status(200).send('Server working');
+ 
 });
 //
 app.use((err, req, res, next) => {
