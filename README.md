@@ -18,7 +18,7 @@ Please see www.mongodb.com for instructions to install on your system
 Ensure you have NodeJS running on your computer and ensure you are in a directory where you want to clone the project.
 
 #### Github
-Clone the repo from GitHub.
+Using the terminal, clone the repo from GitHub.
 
 ```
 git clone https://github.com/MatthewAClark/BE-PT-northcoders-news.git
@@ -31,16 +31,26 @@ change into the working directory
 cd BE-PT-northcoders-news/
 ```
 
-#### Config files
+Once there, you can open the project in your Integrated Development Environment. If this is Microsoft Visual Studio, then this is achieved by issueing the following command
+```
+code .
+```
 
-In conjunction with the database MongoDB, config files will need to be set up to provide paths for the database. This is provided by a `/config` directory in the root of the project with files that are named after the development node environment used at run time.
+#### .env files
 
-you must export the database with `module.exports` within that file
+.env files will need to be provided for local setup. These files should contain the port number the server will run your localhost and it should also provide the database paths. There are three database paths that are used and these are production, test and development. These files should all be followed with the .env extension as well as start with a dot, as following:
 
 ```
-module.exports = 'mongodb://<your_database_path>/northcoders_news';
+.production.env
+.test.env
+.development.env
 ```
-saved in `/config/<NODE_ENVIRONMENT>.js`
+
+The files contents should be as follows:
+```
+PORT=3000
+dbPath = `mongodb://<your_database_url>/northcoders_news_<node_environment>`
+```
 
 Next, install all the required packages
 ```
@@ -57,8 +67,9 @@ If this fails with 'unexpected token ...' then you may need to update to or use 
 ```
 nvm use 9.7.1
 ```
-If successful, you should be able to point 
-Using a web browser or an API client such as Postman, make a GET request 
+If successful, your terminal should say - 'Listening to port... (specified by your .env file)' 
+
+If you were to use an API client or your web browser, then make a GET request 
 
 
 ```
