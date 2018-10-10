@@ -8,6 +8,7 @@ const app = require('../server.js');
 const seed = require('../seed');
 const mongoose = require('mongoose'); // in order to disconnect
 
+// run before each test
 describe('API endpoints', () => {
   // Seed our database before each test
   let comments, articles, topics, users;

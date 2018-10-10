@@ -1,16 +1,28 @@
 # Northcoders News - by Matthew Clark
 
-This project is my response for producing a 'reddit like' news feed website for my Northcoders portfolio. This application is an API server for the Northcoders News serving agent providing API access to database end points. 
-The database used on this backend server is MongoDB. It is an unrelational database and you will need a copy of MongoDB installed on your local system.
+This project is my response for the Northcoders News API sprint, where I have reproduced a 'reddit style' news feed website for my Northcoders portfolio. The application provides the back-end for serving the API for the front end sprint of the same project.
+
+This project uses the MongoDB database, which is a schema-less, NoSQL unrelational database.
 
 ## Getting Started
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
 ### Prerequisites
+#### Production
 * Node JS
 * MongoDB
+* Mongoose
+* Cors
+* Bodyparser
 * Express (NodeJS application framework) 
+
+#### Development and Testing
+
 * An API client such as Postman
+* Supertest
+* Chai and Mocha
+* Nodem
+* Dotenv
 
 ### Installing
 #### MongoDB
@@ -59,6 +71,10 @@ npm install
 
 This should install all the required packages as listed in the package.json file.
 
+In your terminal, ensure that the mongo database is running by the following command
+```
+mongod
+``` 
 To ensure that installation is successful, you can start by running the following NODE environment.
 ```
 npm run dev
@@ -69,98 +85,118 @@ nvm use 9.7.1
 ```
 If successful, your terminal should say - 'Listening to port... (specified by your .env file)' 
 
-If you were to use an API client or your web browser, then make a GET request 
-
-
+And point your web browser or API client using a GET request to the following URL, should return a JSON object of all the articles in the database. 
 ```
+GET localhost:<port>/api/articles
 ```
+The first article it should return is this
 ```
+{
+    votes: 0,
+    _id: "5bb91da7d7e67c5be8fb6efe",
+    title: "Running a Node App",
+    created_by: "5bb91da2d7e67c5be8fb6efd",
+    body: "This is part two of a series on how to get up and running with Systemd and Node.js. This part dives deeper into how to successfully run your app with systemd long-term, and how to set it up in a production environment.",
+    belongs_to: 
+    {
+        _id: "5bb91da2d7e67c5be8fb6ef5",
+        title: "Coding",
+        slug: "coding",
+        __v: 0
+    },
+    __v: 0
+} ... 
 ```
-
-
-
-
-End with an example of getting some data out of the system or using it for a little demo
+... and so on
 
 ## Running the tests
+The test script for this project resides in the `/spec` directory in the root of this project and is called `/main.spec.js`. It is executed as follows:
 
-Explain how to run the automated tests for this system
+The test suite comprises of the following packages
+* Supertest
+* Mocha
+* Chai
+```
+npm run test
+``` 
+
+These tests simulate API request for the various database endpoints. Before each test, the database is reseeded in order for consistency with the data used. At the end of every test, the database is disconnected.
+
+Supertest is used to simulate requests being made to the server, with Mocha providing the framework and Chai providing the assertion library. For more information, please visit the following:
+
 
 ### Break down into end to end tests
 
-Explain what these tests test and why
+The tests are broken down into each individual database models. These are
+* Topics
+* Articles
+* Comments 
 
-```
-Give an example
-```
+Each model is then tested with the individual API requests GET, POST, etc in conjunction with Supertest.
 
 ### And coding style tests
 
-Explain what these tests test and why
+Using the Mocha and Chai test environments, we can use the `it` block to define an individual test. 
+```
+it('Returns all the articles', () => {
+```
+The following command instructs Supertest to make an API request
+```
+    return request(app).get('/api/articles')
+```
+Using promises so that the code runs in sync. That is, only do this when we got the response.
+```
+      .then((res) => {
+```
+Using `expect` from the Chai library, we can check that what is returned from the API request is correct. 
+
+In this following example, we are checking that it is an array, equal to 4 in length, has a key 'title' of the first element '[0]' equal to 'Living in the shadow of a great man'. We can then check each element.
 
 ```
-Give an example
+        expect(res.body).to.be.an('array');
+        expect(res.body.length).to.equal(4);
+        expect(res.body[0].title).to.equal('Living in the shadow of a great man');
+        expect(res.body[1].title).to.equal('7 inspirational thought leaders from Manchester UK');
+        expect(res.body[2].title).to.equal('They\'re not exactly dogs, are they?');
+        expect(res.body[3].title).to.equal('UNCOVERED: catspiracy to bring down democracy');
+        // expect(res.body.belongs_to).to.equal(String(topics[0]._id))
 ```
+Closing parentheses brackets
+```
+      });
+  });
+```
+
 
 ## Deployment
 
-Add additional notes about how to deploy this on a live system
+The project is online at Heroku
 
-## Built With
+https://fathomless-journey-19111.herokuapp.com
 
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
+### MLab
+MLab is used to serve the database for this project. It is a service that allows us to deploy MongoDB databases. For documentation on MLab, visit  
 
-## Contributing
+https://docs.mlab.com
 
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
+### Environment Variables
+This project relies on the global object `process.env` for environment variables when setting up parameters that are required from external sources. The app uses the following variables stored on this object.
 
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
+* `process.env.NODE_ENV` - This should be set to `production` when the app is used live
+* `process.env.dbPath` - This is where the MongoDB database is stored.   
 
 ## Authors
 
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
+* **Matthew Clark** - Northcoders student
 
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
 
 ## License
+This app is licensed under Northcoders
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
 
 ## Acknowledgments
 
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
+Special thanks go to 
+* Northcoders for providing the course material and support throughout the course
+* Fellow Northcoder students from my particular Cohort for peer support 
 
-{
-  "name": "northcoders-news-api",
-  "version": "1.0.0",
-  "description": "Northcoders News API Sprint",
-  "main": "listen.js",
-  "scripts": {
-    "test": "mocha spec/",
-    "start": "node listen.js",
-    "dev": "nodemon listen.js",
-    "lint": "eslint ./"
-  },
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "body-parser": "^1.18.3",
-    "cors": "^2.8.4",
-    "express": "^4.16.3",
-    "mongodb": "^3.1.6",
-    "mongoose": "^5.2.17"
-  },
-  "devDependencies": {
-    "chai": "^4.1.2",
-    "eslint": "^5.6.0",
-    "mocha": "^5.2.0",
-    "nodemon": "^1.18.4",
-    "supertest": "^3.3.0"
-  }
-}
