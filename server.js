@@ -17,7 +17,7 @@ console.log(url)
 const cors = require('cors');
 
 // Connect to database
-mongoose.connect(url);
+//mongoose.connect(url);
 
 // Define routes
 const apiRoutes = require('./routes/apiRoutes.js');
