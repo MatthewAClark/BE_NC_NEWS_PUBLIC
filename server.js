@@ -13,11 +13,10 @@ const express = require('express');
 const mongoose = require('mongoose');
 const app = require('express')();
 const url = require('./config');
-console.log(url)
 const cors = require('cors');
 
 // Connect to database
-//mongoose.connect(url);
+mongoose.connect(url);
 
 // Define routes
 const apiRoutes = require('./routes/apiRoutes.js');
