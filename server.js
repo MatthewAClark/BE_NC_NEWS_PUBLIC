@@ -13,6 +13,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const app = require('express')();
 const url = require('./config');
+console.log(url)
 const cors = require('cors');
 
 // Connect to database
