@@ -33,7 +33,7 @@ Ensure you have NodeJS running on your computer and ensure you are in a director
 Using the terminal, clone the repo from GitHub.
 
 ```
-git clone https://github.com/MatthewAClark/BE-PT-northcoders-news.git
+git clone https://github.com/MatthewAClark/BE_NC_NEWS_PUBLIC.git
 ```
 
 #### Node Setup
