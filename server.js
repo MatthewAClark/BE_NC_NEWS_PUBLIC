@@ -16,7 +16,8 @@ const url = require('./config');
 const cors = require('cors');
 
 // Connect to database
-mongoose.connect(url);
+
+mongoose.connect(url, {useNewUrlParser: true});
 
 // Define routes
 const apiRoutes = require('./routes/apiRoutes.js');

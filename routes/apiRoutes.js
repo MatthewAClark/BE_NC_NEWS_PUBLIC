@@ -5,16 +5,15 @@ const routes = {
   topics: require('./topics')
 };
 
+
+
 const {main} = require('../controllers/index.js');
 
 const express  = require('express');
 const router = express.Router();
 
-//router.get('/', main.fetchAll);
-// 
-// router.get('/', (req, res) => {
-//   res.send(200).res.render('../public/index.html');
-// });
+router.use(express.static('public/api'));
+
 router.use('/users', routes.users);
 
 router.use('/comments', routes.comments);
